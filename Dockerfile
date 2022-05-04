@@ -15,17 +15,20 @@ COPY . .
 
 USER postgres
 
+
+#RUN echo "local all admin 	md5" >> /etc/postgresql/12/main/pg_hba.conf
 # Server startup with creating db
 RUN pg_ctlcluster 12 main start && \
 psql -c "CREATE USER admin WITH SUPERUSER PASSWORD 'admin';" && \
-#createdb -O admin admin && \
-psql -c "\i db.sql" && \
+psql -c "CREATE USER seller WITH PASSWORD 'seller';" && \
+psql -c "CREATE USER manager WITH PASSWORD 'manager';" && \
+psql -c "\i db.sql"&& \
 psql -c "ALTER DATABASE userdb OWNER TO admin;" && \
 pg_ctlcluster 12 main stop
 
 # Configure remote connection
 RUN echo "host all all 	0.0.0.0/0 md5" >> /etc/postgresql/12/main/pg_hba.conf && \
-echo "listen_addresses='*'" >> /etc/postgresql/12/main/postgresql.conf
+RUN echo "listen_addresses='*'" >> /etc/postgresql/12/main/postgresql.conf
 EXPOSE 5432
 
 
