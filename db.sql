@@ -1,9 +1,6 @@
 CREATE DATABASE userdb;
-\c userdb
-
+\c userdb;
 BEGIN;
-
-
 
 CREATE TABLE IF NOT EXISTS public.buyer
 (
@@ -187,17 +184,11 @@ ALTER TABLE IF EXISTS public.sclad_product
     ON DELETE NO ACTION
     NOT VALID;
 
-/* roles  
-CREATE ROLE seller WITH LOGIN PASSWORD 'seller';
-CREATE ROLE manager WITH LOGIN PASSWORD 'manager';
-*/
-/* grants */
-GRANT SELECT, INSERT, UPDATE ON product TO seller;
-GRANT SELECT, INSERT, UPDATE ON order_ TO seller;
-GRANT SELECT, INSERT, UPDATE ON order_product TO seller;
-GRANT admin TO manager;
 
-/* FUNCTIONS & TRIGGERS */
+
+
+
+
 CREATE OR REPLACE PROCEDURE discount( orderId integer, x integer) AS 
 $$ 
     UPDATE public.order_
@@ -264,3 +255,7 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER tg_del_update 
 AFTER DELETE ON public.order_product 
 FOR EACH ROW EXECUTE PROCEDURE tg_del_update_order_price();
+
+END;
+
+

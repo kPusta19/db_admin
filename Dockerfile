@@ -18,19 +18,22 @@ USER postgres
 
 #RUN echo "local all admin 	md5" >> /etc/postgresql/12/main/pg_hba.conf
 # Server startup with creating db
+
 RUN pg_ctlcluster 12 main start && \
+psql -c "CREATE DATABASE userdb;" && \
+psql -c "\c userdb;" && \
 psql -c "CREATE USER admin WITH SUPERUSER PASSWORD 'admin';" && \
+psql -c "ALTER DATABASE userdb OWNER TO admin;" && \ 
 psql -c "CREATE USER seller WITH PASSWORD 'seller';" && \
 psql -c "CREATE USER manager WITH PASSWORD 'manager';" && \
-psql -c "\i db.sql"&& \
-psql -c "ALTER DATABASE userdb OWNER TO admin;" && \
-pg_ctlcluster 12 main stop
+psql -c "\i db.sql" && \
+pg_ctlcluster 12 main stop 
 
 # Configure remote connection
-RUN echo "host all all 	0.0.0.0/0 md5" >> /etc/postgresql/12/main/pg_hba.conf && \
-RUN echo "listen_addresses='*'" >> /etc/postgresql/12/main/postgresql.conf
-EXPOSE 5432
-
+# RUN echo "host all all 	0.0.0.0/0 md5" >> /etc/postgresql/12/main/pg_hba.conf && \
+# RUN echo "host all all 	0.0.0.0/0 md5" >> /etc/postgresql/12/main/pg_hba.conf 
+# EXPOSE 5432
+# VOLUME /data
 
 CMD ["/usr/lib/postgresql/12/bin/postgres", "-D", "/var/lib/postgresql/12/main", "-c", "config_file=/etc/postgresql/12/main/postgresql.conf"]
 
