@@ -22,7 +22,8 @@ psql -c "\i db.sql" && \
 pg_ctlcluster 12 main stop 
 
 # Configure remote connection
-RUN echo "host all all 	0.0.0.0/0 peer" >> /etc/postgresql/12/main/pg_hba.conf && \ 
+RUN echo "host all all 	0.0.0.0/0 md5" >> /etc/postgresql/12/main/pg_hba.conf && \ 
+#echo "local all admin 	0.0.0.0/0 md5" >> /etc/postgresql/12/main/pg_hba.conf && \ 
 echo "listen_addresses='*'" >> /etc/postgresql/12/main/postgresql.conf
 EXPOSE 5432
 
