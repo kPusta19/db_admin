@@ -1,0 +1,22 @@
+version: "3"
+services:
+ client1:
+  build: ./client1
+  ports: 
+    - 5401:5432
+ client2:
+  build: ./client2
+  ports: 
+    - 5402:5432
+ client3:
+  build: ./client3
+  ports: 
+    - 5403:5432
+ client4:
+  build: ./client4
+  ports: 
+    - 5404:5432
+ client5:
+  build: ./client5
+  ports: 
+    - 5405:5432
