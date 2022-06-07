@@ -260,4 +260,19 @@ CREATE TRIGGER tg_del_update
 AFTER DELETE ON public.order_product 
 FOR EACH ROW EXECUTE PROCEDURE tg_del_update_order_price();
 
+GRANT SELECT, UPDATE, INSERT ON product TO seller;
+GRANT SELECT, UPDATE, INSERT ON order_ TO seller;
+GRANT SELECT, UPDATE, INSERT ON order_product TO seller;
+GRANT SELECT ON buyer TO seller;
+GRANT SELECT ON branch_product TO seller;
+GRANT SELECT ON sclad_product TO seller;
+
+GRANT SELECT, UPDATE, INSERT ON branch_product TO manager;
+GRANT SELECT, UPDATE, INSERT ON sclad_product TO manager;
+GRANT SELECT, UPDATE, INSERT ON buyer TO manager;
+GRANT SELECT, UPDATE, INSERT ON staff TO manager;
+GRANT SELECT ON branch TO manager;
+GRANT SELECT ON sclad TO manager;
+
 END;
+
